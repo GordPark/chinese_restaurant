@@ -6,23 +6,25 @@
     <h1>Cart Page입니다.</h1> 
 <ul>
     <h3>장바구니</h3>  
-    {% for food in object %}     
+    {% for item in object_list %}     
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
           <div class="col-md-4">
-            <a href="{% url 'order:order_detail' pk=food.id %}"><img src="{{ object.image_url }}" class="img-fluid rounded-start" alt="..."></a>
+            <a href="{% url 'order:order_detail' pk=item.food.pk %}"><img src="{{ item.food.image_url }}" class="img-fluid rounded-start" alt="..."></a>
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title"><a href="{% url 'order:order_detail' pk=food.id %}">{{ food.name }}</a></h5>
-              <p class="card-text">{{ food.description }}</p>
-              <p class="card-text">₩{{ food.price }}</p>
-              <p class="card-text"><small class="text-body-secondary">판매자-{{food.user}}</small></p>
-              {{food.amount}}
+              <h5 class="card-title"><a href="{% url 'order:order_detail' pk=item.food.pk %}">{{ item.food.name }}</a></h5>
+              <p class="card-text">{{ item.food.description }}</p>
+              <p class="card-text">₩{{ item.food.price }}</p>
+              <p class="card-text"><small class="text-body-secondary">판매자-{{item.food.user}}</small></p>
+              <p class="card-text"><small class="text-body-secondary">수량 {{item.amount}}</small></p>
+              <p class="card-text"><small class="text-body-secondary">총 금액 ₩{{item.total_price}}</small></p>
+              
             </div>
           </div>
         </div>
-        <form action="{% url 'order:delete' pk=food.id %}" method="post">
+        <form action="{% url 'order:delete' pk=item.pk %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-info" style="background-color: #f78c71; padding: 8px 18px;  
             font-size: 14px; color: white;  

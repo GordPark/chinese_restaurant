@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from seller.models import Food
 from .models import Cart
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
+from django.db.models import F
 # from django.contrib.auth
 
 # Create your views here.
@@ -13,10 +15,18 @@ def order_detail(request, pk):
 
     return render(request, 'order/order_detail.html', context)
 
-def cart(request,pk):
-    object_list = Food.objects.all().filter(user__id=request.user.id)
+@login_required
+def cart(request): 
+    user = request.user    
+    object_list = Cart.objects.filter(user=user)    
+
+    for item in object_list:
+        item.total_price = item.food.price * item.amount        
+        item.save()
+
     context = {
-        'object': object_list
+        'object_list': object_list,        
+        
     }
     return render(request, 'order/cart.html', context)
 
@@ -41,10 +51,11 @@ def add_cart(request):
     }
     return render(request, 'order/cart.html', context)
 
-def cart_delete(request,pk):    
-    food = Food.objects.get(pk=pk)
+# 사용자id
+def cart_delete(request,pk):       
+    food = Cart.objects.get(pk=pk)
     food.delete()
-    return redirect('index')
+    return redirect('order:cart')
 
 def cart_remove(request,pk):    
     food_id = request.GET['food_id']

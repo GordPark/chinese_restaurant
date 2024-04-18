@@ -16,7 +16,7 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title"><a href="{% url 'order:order_detail' pk=food.id %}">{{ food.name }}</a></h5>
+              <h5 class="card-title"><a href="{% url 'order:order_detail' pk=food.id %}">#{{food.id}}-{{ food.name }}</a></h5>
               <p class="card-text">{{ food.description }}</p>
               <p class="card-text">₩{{ food.price }}</p>
               <p class="card-text"><small class="text-body-secondary">판매자-{{food.user}}</small></p>
