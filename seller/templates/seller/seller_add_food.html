@@ -1,0 +1,26 @@
+<h1>상품 등록 페이지</h1>
+<!-- novalidate 부분 확인 -->
+<form action="" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    {% csrf_token %}    
+    <div>
+    <label for="user">유저:</label>
+    <input type="text" name="user">
+    </div>
+    <div>
+    <label for="name">음식이름:</label>
+    <input type="text" name="name">
+    </div>
+    <div>
+    <label for="price">가격:</label>
+    <input type="text" name="price">
+    </div>
+    <div>
+    <label for="description">소개:</label>
+    <textarea name="description" rows="2" cols="50"></textarea>
+    </div>
+    <div>
+        <label for="file">사진을 올려주세요</label>
+        <input type="file" name="file">        
+    </div>
+    <input type="submit" value="제출">
+</form>

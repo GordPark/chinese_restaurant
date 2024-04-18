@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<h1>Seller Detail Page</h1>
+<h2>ID - #{{object.id}}</h2>
+
+<ul>
+    <h3>음식</h3>
+    <div class="col-md-4">
+        <img src="{{ object.image_url }}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title"><a href="">{{ object.name }}</a></h5>
+          <p class="card-text">{{ object.description }}</p>
+          <p class="card-text">₩{{ object.price }}</p>
+          <p class="card-text"><small class="text-body-secondary">{{object.user}}</small></p>
+        </div>
+      </div>
+    
+</ul>
+<form action="{% url 'seller:food_delete' pk=object.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-info" style="background-color: #f78c71; padding: 8px 18px;  
+    font-size: 14px; color: white;  
+      padding: 15px 25px;
+      display: inline-block;
+      border: 1px solid rgba(0,0,0,0.21);
+      border-bottom-color: rgba(0,0,0,0.34);
+      text-shadow:0 1px 0 rgba(0,0,0,0.15);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                  0 2px 0 -1px rgba(0,0,0,0.13), 
+                  0 3px 0 -1px rgba(0,0,0,0.08), 
+                  0 3px 13px -1px rgba(0,0,0,0.21);
+                  padding : 16px; margin: 16px;">삭제</button>
+</form>
+</div>
+
+
+   
+{% endblock %}

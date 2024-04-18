@@ -1,0 +1,7 @@
+<a href="{% url 'order:order_detail' pk=food.id %}"><li>{{ food.name }}</li></a>
+<li>{{ food.description }}</li>
+<li>{{ food.image_url }}</li>
+<img src="{{ food.image_url }}" alt="">
+<li>{{ food.price }}</li>
+
+{% url 'order:cart' pk=object.id %}

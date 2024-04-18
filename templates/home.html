@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<h1>메인페이지</h1>
+
+
+
+<ul>
+    <h3>음식</h3>
+    {% for food in object %}  
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <a href="{% url 'order:order_detail' pk=food.id %}"><img src="{{ food.image_url }}" class="img-fluid rounded-start" alt="..."></a>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'order:order_detail' pk=food.id %}">{{ food.name }}</a></h5>
+              <p class="card-text">{{ food.description }}</p>
+              <p class="card-text">₩{{ food.price }}</p>
+              <p class="card-text"><small class="text-body-secondary">판매자-{{food.user}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    {% endfor %}
+</ul>
+
+
+</div>
+{% endblock %}
+
+

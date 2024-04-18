@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+<h1>Order Detail</h1>
+<h2>ID - #{{object.id}}</h2>
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ object.image_url }}" class="img-fluid rounded-start" alt="..."
+            style="padding: 16px; border: 3px solid gray;
+            border-radius: 7px;">
+            
+          
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><a href="">{{ object.name }}</a></h5>
+                <p class="card-text">{{ object.description }}</p>
+                <p class="card-text">₩{{ object.price }}</p>
+                <p class="card-text"><small class="text-body-secondary">{{ object.user }}</small></p>
+            </div>
+            <div class="">
+                <input type="hidden" name="" id="csrfToken" value="{{csrf_token}}">
+                <button type="button" onclick="modifyCartAmount({{object.id}}, 1)" class="btn btn-success">+</button>
+                <button type="button" onclick="modifyCartAmount({{object.id}}, -1)"  class="btn btn-danger">-</button>
+                <button type="button" class="btn btn-primary">
+                    현재 수량 <span class="badge bg-secondary"><span id="currentQuantity"></span></span>
+                </button>
+            </div>
+
+            <div>
+                <form action="" method="post">
+                    {% csrf_token %}                    
+                    <button type="submit" class="btn btn-primary">
+                     담기 <span class="badge bg-secondary"><span id="totalQuantity"></span></span>
+                    </button>
+                </form>
+                <button><a href="{% url 'order:cart' pk=object.id %}">카트이동</a></button>
+                
+            </div>         
+        </div>         
+    </div>
+</div>
+<script>
+    function getCsrfToken() {
+        return document.getElementById('csrfToken').value;
+    }
+    function modifyCartAmount(food_id, change) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{% url "order:modify_cart" %}', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('X-CSRFToken', getCsrfToken());
+
+    xhr.onload = function(){
+        if (this.status === 200) {
+            var response = JSON.parse(this.responseText);
+            document.getElementById('currentQuantity').textContent = response.newQuantity;
+            document.getElementById('totalQuantity').textContent = response.totalQuantity;
+            
+            console.log('Update successful:', response.message);
+        } else {
+            console.error('Error updating:', this.statusText);
+        }
+    };
+    // 백틱 조심``````````
+    xhr.send(`foodId=${food_id}&amountChange=${change}`);
+}
+</script>
+{% endblock %}
