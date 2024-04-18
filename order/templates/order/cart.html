@@ -1,52 +1,81 @@
 {% extends 'base.html' %}
-
+<!-- load로 sum_tags.py를 쓰겠다 -->
+{% load sum_tags %}
 {% block content %}
 
 <div class="container">
-    <h1>Cart Page입니다.</h1> 
-<ul>
-    <h3>장바구니</h3>  
-    {% for item in object_list %}     
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <a href="{% url 'order:order_detail' pk=item.food.pk %}"><img src="{{ item.food.image_url }}" class="img-fluid rounded-start" alt="..."></a>
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title"><a href="{% url 'order:order_detail' pk=item.food.pk %}">{{ item.food.name }}</a></h5>
-              <p class="card-text">{{ item.food.description }}</p>
-              <p class="card-text">₩{{ item.food.price }}</p>
-              <p class="card-text"><small class="text-body-secondary">판매자-{{item.food.user}}</small></p>
-              <p class="card-text"><small class="text-body-secondary">수량 {{item.amount}}</small></p>
-              <p class="card-text"><small class="text-body-secondary">총 금액 ₩{{item.total_price}}</small></p>
-              
-            </div>
-          </div>
-        </div>
-        <form action="{% url 'order:delete' pk=item.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-info" style="background-color: #f78c71; padding: 8px 18px;  
-            font-size: 14px; color: white;  
-              padding: 15px 25px;
-              display: inline-block;
-              border: 1px solid rgba(0,0,0,0.21);
-              border-bottom-color: rgba(0,0,0,0.34);
-              text-shadow:0 1px 0 rgba(0,0,0,0.15);
-              box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
-                          0 2px 0 -1px rgba(0,0,0,0.13), 
-                          0 3px 0 -1px rgba(0,0,0,0.08), 
-                          0 3px 13px -1px rgba(0,0,0,0.21);
-                          padding : 16px; margin: 16px;">삭제</button>
-        </form>
-        
+    <h1>Cart - #{{user}}</h1> 
+    <div>
+      <div class="alert alert-dark" role="alert">
+        <!-- 템플릿 문법 sum_price()를 태그방식으로 불러옴 object_list는 인자    -->
+        결제 예정금액 ₩{% sum_prices object_list %}
       </div>
-      {% endfor %}     
+      <form action="{% url 'order:cash' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info" style="background-color: #b9f07b; padding: 8px 18px;  
+        font-size: 14px; color: white;            
+          display: inline-block;
+          border: 1px solid rgba(0,0,0,0.21);
+          border-bottom-color: rgba(0,0,0,0.34);
+          text-shadow:0 1px 0 rgba(0,0,0,0.15);
+          box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                      0 2px 0 -1px rgba(0,0,0,0.13), 
+                      0 3px 0 -1px rgba(0,0,0,0.08), 
+                      0 3px 13px -1px rgba(0,0,0,0.21);
+                      margin: 6px 0 12px 0; font-size: x-large;">결제하기</button>
+                      
+      </form>  
+      
+    </div>
     
-</ul>
+    
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for item in object_list %} 
+      
+        <div class="col">
+          <div class="card">            
+            <a href="{% url 'order:order_detail' pk=item.food.pk %}"><img src="{{ item.food.image_url }}" class="img-fluid rounded-start" alt="..."></a>
+              <!-- card-body -->
+              <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'order:order_detail' pk=item.food.pk %}">{{ item.food.name }}</a></h5>
+                <p class="card-text">{{ item.food.description }}</p>
+                <p class="card-text">₩{{ item.food.price }}</p>
+                <p class="card-text"><small class="text-body-secondary">판매자-{{item.food.user}}</small></p>
+                <p class="card-text"><small class="text-body-secondary">수량 {{item.amount}}</small></p>
+                <p class="card-text"><small class="text-body-secondary">총 금액 ₩{{item.total_price}}</small></p>
+              </div>    
+              <div class="col">
+              <form action="{% url 'order:delete' pk=item.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info" style="background-color: #f78c71; padding: 8px 18px;  
+                font-size: 14px; color: white;                    
+                  display: inline-block;
+                  border: 1px solid rgba(0,0,0,0.21);
+                  border-bottom-color: rgba(0,0,0,0.34);
+                  text-shadow:0 1px 0 rgba(0,0,0,0.15);
+                  box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                              0 2px 0 -1px rgba(0,0,0,0.13), 
+                              0 3px 0 -1px rgba(0,0,0,0.08), 
+                              0 3px 13px -1px rgba(0,0,0,0.21);
+                              margin: 16px; font-size: x-large;">삭제</button>
+                </form>        
+                
+              </div>
+          </div>
+        
+        </div>
+        {% endfor %}
+      </div>
 
+      <div class="">
+        <br>
+        <br>
+        <br>
+      </div>
+       
 
 </div>
 {% endblock %}
 
-
+{% block footer %}
+{% endblock %}

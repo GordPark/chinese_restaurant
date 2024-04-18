@@ -19,10 +19,20 @@ def order_detail(request, pk):
 def cart(request): 
     user = request.user    
     object_list = Cart.objects.filter(user=user)    
+    
+    payment_total_price = 0
 
     for item in object_list:
-        item.total_price = item.food.price * item.amount        
+        item.total_price = item.food.price * item.amount       
+        payment_total_price += item.total_price
+        # 결제 예정금액 -> sum_tags로 구현
+        # object_list.payment_total_price = payment_total_price
+        # QuerySet객체에 개별 객체의 속성을 직접적으로 변경하거나 저장할 수 없다
+        # object_list.payment_total_price.save()
         item.save()
+    
+    
+
 
     context = {
         'object_list': object_list,        
@@ -98,3 +108,6 @@ def modify_cart(request):
     }
     return JsonResponse(context)
     # request.POST : <QueryDict: {'foodid': ['7'], 'amountCahnge': ['1']}>
+
+def cash(request):
+    return render(request, 'order/cash.html')

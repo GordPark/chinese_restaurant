@@ -10,6 +10,7 @@ class Cart(models.Model):
     amount = models.IntegerField(default=0)
     # 금액    
     total_price = models.IntegerField(default=0)
+    payment_total_price = models.IntegerField(default=0)
 
 
 class Order(models.Model):

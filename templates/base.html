@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,63 +7,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    {% block extra-style %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Cinzel&family=Poppins:wght@500;600&family=Source+Code+Pro:wght@300&family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a47086679e.js" crossorigin="anonymous"></script>
+    <!-- 원래는 밖에 style태그가 있어야됨 블럭태그안에 style태그가 있다면 다른 html에서 상속받았을 때 블럭안에 또 style태그를 쓴다면 어떻게 될지 덮어쓰기가 될지 이어쓰기가 될지 -->
     <style>
-    .font {
-        text-align: center;
-        color: #58595b;
-        font-family: jua;
-    }
-    a{
-      text-decoration: none;  
-    }
-    h1{
-        padding: 16px 0 0 16px;
-    }
-    
-    
-    </style>
+      body{
+          font-family: "Black Han Sans", sans-serif;
+          font-weight: 400;   
+          font-style: normal;
+      }
+      i {
+        margin-right: 6px;
+      }
+
+      .navbar-brand {
+        font-size: xx-large;        
+
+      }
+  
+      .font {
+          text-align: center;
+          color: #58595b;
+          font-family: jua;
+      }
+      a{
+        text-decoration: none;  
+      }
+      h1{
+          padding: 16px 0 0 16px;
+      }
+      
+      
+      </style>
+    {% block extra-style %}
+   
     {% endblock %}
 </head>
 <body>
     <!-- nav블럭 -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'index' %}">몽고반점</a>
+          <a class="navbar-brand" href="{% url 'index' %}"><i class="fa-solid fa-utensils"></i>몽고반점</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">메뉴</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">고객 게시판</a>
-              </li>
+                <a class="nav-link active" aria-current="page" href="{% url 'index' %}"><i class="fa-solid fa-house"></i>메뉴</a>
+              </li>              
               
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'seller:seller_index' %}">판매자 페이지</a>
-              </li>              
+              </li>  
+
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">고객 게시판</a>
+              </li>      
+
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Dropdown
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">개발예정</a></li>
+                  <li><a class="dropdown-item" href="#">``1</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="#">``2</a></li>
                 </ul>
               </li>
               <!-- 사용자가 판매자 권한이 있으면 사용 아니면 못쓰게 -->
               <li class="nav-item">
-                <a class="nav-link disabled">개발예정 페이지</a>
+                <a class="nav-link disabled">결제 내역</a>
               </li>
             </ul>
             <form class="d-flex" action="{% url 'order:cart' %}">              
-              <button class="btn btn-outline-success" type="submit">Cart</button>
-              
+              <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-cart-shopping"></i>Cart</button>              
             </form>
             
           </div>
@@ -93,12 +115,19 @@
                 </li>
             </ul>
           </div>
-    </nav>    
+    </nav>   
+    <div><img src="{% static 'main_image.jpg' %}" alt=""></div> 
 
         <!-- content블럭  -->
       
         
         {% block content %}{% endblock %}
+
+        <!-- footer -->
+ 
+  <div class="fixed-bottom bg-light text-center" style="background-color: #e3f2fd;">
+    <h2 class="fw-light">Copyright © 2024 Gord. All rights reserved.</h2>
+  </div>
     
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>

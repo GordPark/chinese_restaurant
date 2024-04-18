@@ -46,7 +46,7 @@ def add_food(request):
 
         Food.objects.create(user= user, name=food_name, price= food_price, description=food_description, image_url=url)
          
-        return render(request, 'seller/seller_index.html')
+        return redirect('seller:seller_index')
     
 
   

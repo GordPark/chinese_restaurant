@@ -1,11 +1,28 @@
 {% extends 'base.html' %}
+{% block extra-style %}
+<style>
+    button{    
+    font-size: x-large; 
+    color: white;                      
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.21);
+    border-bottom-color: rgba(0,0,0,0.34);
+    text-shadow:0 1px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                0 2px 0 -1px rgba(0,0,0,0.13), 
+                0 3px 0 -1px rgba(0,0,0,0.08), 
+                0 3px 13px -1px rgba(0,0,0,0.21);
+    margin: 8px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
-<h1>Order Detail</h1>
-<h2>ID - #{{object.id}}</h2>
+<h1>Order - #{{object.id}} </h1>
 
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row g-0">
+
+
         <div class="col-md-4">
             <img src="{{ object.image_url }}" class="img-fluid rounded-start" alt="..."
             style="padding: 16px; border: 3px solid gray;
@@ -31,17 +48,34 @@
 
             <div>
                 <form action="" method="post">
-                    {% csrf_token %}                    
-                    <button type="submit" class="btn btn-primary">
-                     담기 <span class="badge bg-secondary"><span id="totalQuantity"></span></span>
-                    </button>
-                    <button  class="btn btn-primary" style="margin: 16px;"><a href="{% url 'order:cart'  %}" style="color: white;">카트이동</a></button>               
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" style="background-color: #5DB075;
+                    font-size: x-large; color: white;
+                      display: inline-block;
+                      border: 1px solid rgba(0,0,0,0.21);
+                      border-bottom-color: rgba(0,0,0,0.34);
+                      text-shadow:0 1px 0 rgba(0,0,0,0.15);
+                      box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                                  0 2px 0 -1px rgba(0,0,0,0.13), 
+                                  0 3px 0 -1px rgba(0,0,0,0.08), 
+                                  0 3px 13px -1px rgba(0,0,0,0.21);
+                                  margin: 16px;" >
+                        담기 <span class="badge bg-secondary"><span id="totalQuantity"></span></span>
+                       </button>
+                    <button type="submit" class="btn btn-info" style="background-color: #f78c71; padding: 8px 18px;  
+                    font-size: x-large; color: white;  
+                      display: inline-block;
+                      border: 1px solid rgba(0,0,0,0.21);
+                      border-bottom-color: rgba(0,0,0,0.34);
+                      text-shadow:0 1px 0 rgba(0,0,0,0.15);
+                      box-shadow: 0 1px 0 rgba(255,255,255,0.34) inset, 
+                                  0 2px 0 -1px rgba(0,0,0,0.13), 
+                                  0 3px 0 -1px rgba(0,0,0,0.08), 
+                                  0 3px 13px -1px rgba(0,0,0,0.21);
+                                  margin: 16px;" ><a href="{% url 'order:cart'  %}" style="color: white;">카트이동</a></button>
                 </form>
-                
             </div>         
-        </div>         
-    </div>
-</div>
+        </div>       
 <script>
     function getCsrfToken() {
         return document.getElementById('csrfToken').value;
