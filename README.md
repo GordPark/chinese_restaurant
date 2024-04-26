@@ -1,5 +1,6 @@
 # 몽고반점 24/04/18
 
+https://gordp.pythonanywhere.com/
 v0.0.0
 
 **구현예정**
