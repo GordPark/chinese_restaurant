@@ -1,7 +1,10 @@
 # 몽고반점 24/04/18
 
-https://gordp.pythonanywhere.com/
 v0.0.0
+
+https://gordp.pythonanywhere.com/
+
+
 
 **구현예정**
 고객게시판 / 결제내역 / 카테고리 / 카트-결제 예정금액
